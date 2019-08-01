@@ -3,31 +3,28 @@
 
 ## Description
 
-This is a serverless component that takes uploaded SVG files from one S3 Bucket, converts them to PDF and uploads to another S3 Bucket. It contains:
+This is a serverless component that takes uploaded images from one S3 Bucket, invokes AWS Rekognition Detect Text and then stores the detected text along with the image key to a DynamoDB table. It contains:
 
-- an Input S3 Bucket that accepts SVG files.
+- an Images S3 Bucket to upload images to.
 
-- a Lambda that takes the SVG file from the Input S3 bucket, converts it the file to a PDF and uploads it to the Output bucket
+- a Lambda that takes the image from the Images S3 bucket, detects text and stores it in a DynamoDB table (in TypeScript)
 
-- an Output S3 Bucket that receives PDF files.
+- a DynamoDB table that keeps the imageKey and imageText (detected text).
 
 ## Deployment Parameters
 
-This component has one CloudFormation deployment parameter:
+This component has two CloudFormation deployment parameters:
 
-- `ConversionTimeout`, an optional parameter, represents the timeout of the Conversion Lambda function. By default its 60 seconds.
+- `ImagesS3BucketName`, an optional parameter, represents the name of the Images S3 Bucket. By default its "s3-lambda-detect-image-text-bucket".
 
-- `InputBucketName`, an optional parameter, represents the name of the Input SVG Bucket. By default its "s3-lambda-input-svg-bucket".
+- `TableName`, an optional parameter, represents the name of the DynamoDB table. By default its "imageTexts".
 
-- `OutputBucketName`, an optional parameter, represents the name of the Output PDF Bucket. By default its "s3-lambda-output-pdf-bucket".
+## Latest Release - 1.0.0
 
-## Latest Release - 1.1.0
-
-- Added Input and Output bucket names as Cloudformation Parameters
+- Initial release
 
 ## Roadmap - Upcoming changes
 
 Here are the upcoming changes that I'll add to this serverless component:
 
-- ESLint
 - Tests
