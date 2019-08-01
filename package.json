@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prepackage": "tsc",
-    "package": "aws cloudformation package --template-file template.yml --output-template-file output.yml --s3-bucket app-repo-components",
-    "deploy": "aws cloudformation deploy --template-file output.yml --stack-name s3-lambda-svg-to-pdf-s3 --capabilities CAPABILITY_IAM",
+    "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket app-repo-components",
+    "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name s3-lambda-image-text-detection-dynamodb --capabilities CAPABILITY_IAM",
     "qd": "npm run package && npm run deploy"
   },
   "keywords": [],

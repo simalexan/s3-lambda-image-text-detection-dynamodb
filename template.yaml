@@ -23,9 +23,11 @@ Resources:
       Runtime: nodejs8.10
       CodeUri: src/
       Policies:
-      - S3ReadPolicy:
-          BucketName: !Ref ImagesS3BucketName
-      - RekognitionDetectOnlyPolicy: {}
+        - S3ReadPolicy:
+            BucketName: !Ref ImagesS3BucketName
+        - RekognitionDetectOnlyPolicy: {}
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
       Environment:
         Variables:
           TABLE_NAME: !Ref TableName
