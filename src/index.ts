@@ -1,4 +1,3 @@
-
 import { saveToTable } from './dynamodb-util';
 import  { detectText } from './rekognition-util';
 

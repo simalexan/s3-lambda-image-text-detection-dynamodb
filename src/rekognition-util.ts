@@ -1,9 +1,7 @@
-/*global module, require, Promise, console */
-
 const aws = require('aws-sdk'),
-	rekognition = new aws.Rekognition(),
+  rekognition = new aws.Rekognition(),
+  
 	detectText = async function (bucket: string, fileKey: string) {
-
 		console.log('reKognizing', bucket, fileKey);
     const params = {
       Image: {
