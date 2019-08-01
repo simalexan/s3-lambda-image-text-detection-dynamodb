@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: A serverless component for detecting text from images via AWS Rekognition from an S3 Bucket into a DynamoDB table
+Parameters:
+  ImagesS3BucketName:
+    Type: String
+    Default: 's3-lambda-detect-image-text-bucket'
+    MinLength: 3
+  TableName:
+    Type: String
+    Default: 'detected-images'
+    MinLength: 3
+Resources:
+  ImagesS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ImagesS3BucketName
+  RekognizeText:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Timeout: 30
+      Runtime: nodejs8.10
+      CodeUri: src/
+      Policies:
+      - S3ReadPolicy:
+          BucketName: !Ref ImagesS3BucketName
+      - RekognitionDetectOnlyPolicy: {}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+          PRIMARY_KEY: !Sub ${TableName}Id
+      Events:
+        ImageUpload:
+          Type: S3
+          Properties:
+            Bucket: !Ref ImagesS3Bucket
+            Events: s3:ObjectCreated:*
+  DetectedTextTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TableName
+      AttributeDefinitions:
+      - AttributeName: !Sub ${TableName}Id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: !Sub ${TableName}Id
+        KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: True
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
+
+Outputs:
+  ImagesS3Bucket:
+    Description: Input Images S3 bucket
+    Value: !Ref ImagesS3Bucket
+  DetectedTextTable:
+    Description: DynamoDB Table for detected text
+    Value: !Ref DetectedTextTable

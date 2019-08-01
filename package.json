@@ -14,9 +14,12 @@
     "name": "Aleksandar Simovic <alexander.simovic@gmail.com>",
     "url": "https://serverless.pub"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^8.10.38",
     "typescript": "^3.2.4"
+  },
+  "dependencies": {
+    "uuid": "*"
   }
 }
