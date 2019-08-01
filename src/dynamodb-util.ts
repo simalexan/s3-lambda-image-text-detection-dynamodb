@@ -3,7 +3,7 @@
 const aws = require('aws-sdk'),
 	fs = require('fs'),
 	s3 = new aws.S3(),
-	saveToTable = async function (tableName: string, itemKey: string, itemValue: object) {
+	saveToTable = async function (tableName: any, itemKey: string, itemValue: object) {
 		'use strict';
 		console.log('downloading', bucket, fileKey, filePath);
 		return new Promise(function (resolve, reject) {
