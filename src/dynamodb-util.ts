@@ -3,7 +3,7 @@
 const aws = require('aws-sdk'),
   dynamoDb  = new aws.DynamoDB.DocumentClient(),
   uuidv4 = require('uuid/v4'),
-	saveToTable = async function (tableName: string, primaryKey: string, data: object) {
+	saveToTable = async function (tableName: any, primaryKey: any, data: object) {
 		const item = {
       [primaryKey]: uuidv4()
     };
