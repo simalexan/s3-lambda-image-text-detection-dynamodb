@@ -20,7 +20,7 @@ Resources:
     Properties:
       Handler: index.handler
       Timeout: 30
-      Runtime: nodejs8.10
+      Runtime: nodejs18.x
       CodeUri: src/
       Policies:
         - S3ReadPolicy:
